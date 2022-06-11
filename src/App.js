@@ -1,25 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
+import Category from './Components/Category';
+import Search from './Components/Search';
+import Cuisine from './Pages/Cuisine';
+import Searched from './Pages/Searched';
+import Home from './Pages/Home'
 
-function App() {
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import Recipes from './Pages/Recipes';
+import {GiKnifeFork} from 'react-icons/gi'
+import { motion, AnimatePresence } from 'framer-motion';
+
+const App = () => {
+  const location= useLocation();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AnimatePresence exitBeforeEnter>
+    <motion
+    animate= {{opacity:1}}
+    initial={{opacity:0}}
+    exit={{opacity:0}}
+    transition={{duration:0.5}}>
+      
+      <div className='logo'>
+        <GiKnifeFork/>
+      <Link className='nav' to='/'>
+        Delicious
+        </Link>
+      </div>
+    
+      <Search/>
+      <Category/>
+      <Routes Location={location} key={location.pathname}>
+      <Route path='/' element={<Home/>}/>
+      <Route path='/cuisine/:type' element={<Cuisine/>} />
+      <Route path='/searched/:search' element={<Searched/>} />
+      <Route path='/recipes/:name' element={<Recipes/>} />
+      </Routes>
+      </motion>
+      </AnimatePresence>
+  )
 }
 
-export default App;
+export default App
