@@ -10,14 +10,14 @@ const Recipes = () => {
 
     const params= useParams();
     const getDetails = async()=>{
-      const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=7fb48b8d24114b76b2cd73884bc63d23`);
+      const data = await fetch(`https://api.spoonacular.com/recipes/${params.name}/information?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}`);
       const detailData= await data.json();
       setDetails(detailData)
     }
     useEffect(()=>{
       getDetails()
     }, [params.name])
-
+ 
   return (
     <div className='recipes-wrapper'>
       <div className='image-container'>

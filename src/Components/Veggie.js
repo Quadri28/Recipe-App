@@ -16,7 +16,7 @@ getVegie()
     if (check) {setVegie(JSON.parse(check))} 
     else{
     const api = await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=7fb48b8d24114b76b2cd73884bc63d23&number=9&tags=vegetarian`
+      `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&number=9&tags=vegetarian`
     );
     const response = await api.json();
     localStorage.setItem('vegie', JSON.stringify(response.recipes))

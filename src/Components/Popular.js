@@ -7,15 +7,20 @@ import { Link} from "react-router-dom";
 
 const Popular = () => {
 const [popular, setPopuar] = useState([])
+const [size, setSize]= useState(window.innerWidth)
+const getSize = ()=>{
+  setSize(size)
+}
 useEffect (()=>{
-getPopular()
+getPopular();
+window.addEventListener('resize', getSize)
 }, [])
   const getPopular = async () => {
     const check= localStorage.getItem('popular');
     if (check) {setPopuar(JSON.parse(check))} 
     else{
     const api = await fetch(
-      `https://api.spoonacular.com/recipes/random?apiKey=7fb48b8d24114b76b2cd73884bc63d23&number=9`
+      `https://api.spoonacular.com/recipes/random?apiKey=${process.env.REACT_APP_SPOONACULAR_API_KEY}&number=9`
     );
     const response = await api.json();
     localStorage.setItem('popular', JSON.stringify(response.recipes))
@@ -26,7 +31,8 @@ getPopular()
       <div className="wrapper">
       <h3>Popular picks</h3>
        < Splide options={{
-         perPage:4,
+        
+         perPage:3,
          pagination:false,
          arrows: false,
          gap: '1rem',
